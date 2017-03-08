@@ -1,0 +1,13 @@
+extends login.pug
+
+block content
+	div.container
+		hr
+		h2 Register (success/fail)
+		form( action="/login", method="post")
+			input( type="text", name="firstname", placeholder="firstname")
+			input( type="text", name="lastname", placeholder="lastname")
+			input( type="email", name="email", placeholder="email")
+			input( type="username", name="username", placeholder="username")
+			input( type="password", name="password", placeholder="password")
+			input( type="submit")
