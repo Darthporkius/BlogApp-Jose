@@ -1,5 +1,5 @@
 const express = require('express')
-// const routers = require( __dirname + '/routers/datarouter')
+const routers = require( __dirname + '/routers/datarouter')
 const fs = require('fs')
 const bodyparser = require('body-parser')
 
@@ -11,38 +11,41 @@ app.set('view engine', 'pug')
 
 app.use( bodyparser.urlencoded( { extended: true}))
 
+routers.activeUsername = "Darthporkius"
 
 //Display home screen.
 app.get('/', function (req,res) {
-	res.render('login')
+	res.render('login', {
+		user: routers.activeUsername
+	})
 })
+
+
+////////login code//////////
+// app.post('/login', function(req,res){
+// 	// console.log(reg.body.username)
+// 	// console.log(reg.body.password)
+// 	res.render('login')
+// })
+
+
+
 
 app.get('/register', function (req,res) {
 	res.render('register')
 })
 
+/////////The router/////////
+//Username is the username of the current loggedin user.
+app.use('/username', routers.router)
 
 
 
 
 
-//These routes will be handeled by the router.
-app.get('/home', function (req,res) {
-	res.render('home')
-})
 
-app.get('/mypost', function (req,res) {
-	res.render('myPosts')
-})
 
-app.get('/allposts', function (req,res) {
-	res.render('allPosts')
-})
 
-app.get('/newpost', function (req,res) {
-	res.render('newpost')
-})
-/////////
 
 
 //Server 

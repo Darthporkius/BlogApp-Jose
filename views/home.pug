@@ -1,6 +1,6 @@
 body
 		div.container
-			h1 Welcome to the blog: username
+			h1 Welcome to the blog: #{username}
 			hr
 			img(src="https://68.media.tumblr.com/18bbc815e4c641246df8a28c9633d392/tumblr_mtjxfgMy9K1s3figho1_400.gif")
 			hr
@@ -10,10 +10,10 @@ body
 				input( type="password", name="password", placeholder="password")
 				input( type="submit")
 			hr
-			a( href="/home" ) HOME |
-			a( href="/newpost") Make a Post |
-			a( href="/mypost") Myposts |
-			a( href="/allposts") Allposts |
+			a( href="/username/home" ) HOME |
+			a( href="/username/newpost") Make a Post |
+			a( href="/username/mypost") Myposts |
+			a( href="/username/allposts") Allposts |
 			a( href="/") logout
 			block content
 			hr
