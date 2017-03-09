@@ -1,32 +1,39 @@
 const express = require('express')
 const bodyparser = require('body-parser')
 
-const router = express.Router()
+const users = require( __dirname + '/../app')
 
-var activeUsername
+const router = express.Router()
 
 
 //These routes will be handeled by the router.
 router.get('/home', function (req,res) {
 	res.render('home', {
-		username: activeUsername
+		//displays current user in home.
+		username: users.activeUsername
 	})
 })
 
 router.get('/mypost', function (req,res) {
-	res.render('myPosts')
+	res.render('myPosts', {
+		//displays current user in home.
+		username: users.activeUsername
+	})
 })
 
 router.get('/allposts', function (req,res) {
-	res.render('allPosts')
+	res.render('allPosts', {
+		//displays current user in home.
+		username: users.activeUsername
+	}) 
 })
 
 router.get('/newpost', function (req,res) {
-	res.render('newpost')
+	res.render('newpost', {
+		//displays current user in home.
+		username: users.activeUsername
+	})
 })
 /////////
 
-module.exports = {
-	router: router,
-	activeUsername: activeUsername
-}
+module.exports = router

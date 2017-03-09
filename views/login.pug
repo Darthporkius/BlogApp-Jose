@@ -1,11 +1,11 @@
 body
 		div.container
-			h1 Welcome to the blog #{user}
+			h1 Welcome to the blog
 			hr
 			img(src="https://68.media.tumblr.com/18bbc815e4c641246df8a28c9633d392/tumblr_mtjxfgMy9K1s3figho1_400.gif")
 			hr
 			h2 Login
-			form( action="/login", method="post")
+			form( id="loginInput", action="/login", method="post")
 				input( type="text", name="username", placeholder="username")
 				input( type="password", name="password", placeholder="password")
 				input( type="submit")
@@ -14,3 +14,5 @@ body
 			block content
 			hr
 			img(src="https://s-media-cache-ak0.pinimg.com/originals/22/3f/12/223f12ba386f73d6684f85f8d9ab6f3f.gif")
+			script( src="/static/jquery.js" )
+			script( src="/static/custom.js" )

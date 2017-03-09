@@ -9,27 +9,29 @@ const app = express()
 app.set('views', __dirname + '/views')
 app.set('view engine', 'pug')
 
+//Use jquery
+app.use( '/static', express.static( __dirname + '/static'))
+
 app.use( bodyparser.urlencoded( { extended: true}))
 
-routers.activeUsername = "Darthporkius"
 
 //Display home screen.
 app.get('/', function (req,res) {
-	res.render('login', {
-		user: routers.activeUsername
-	})
+	res.render('login')
 })
 
-
+////////////////////////////
 ////////login code//////////
-// app.post('/login', function(req,res){
-// 	// console.log(reg.body.username)
-// 	// console.log(reg.body.password)
-// 	res.render('login')
-// })
+var activeUsername = "Darthporkius"
 
+app.post('/login', function(req,res){
+	// console.log(reg.body.username)
+	// console.log(reg.body.password)
+	res.render('login')
+})
 
-
+////////////////////////////
+////////////////////////////
 
 app.get('/register', function (req,res) {
 	res.render('register')
@@ -37,14 +39,11 @@ app.get('/register', function (req,res) {
 
 /////////The router/////////
 //Username is the username of the current loggedin user.
-app.use('/username', routers.router)
+app.use('/username', routers)
 
-
-
-
-
-
-
+//exporting the username so it can be used in the 
+//home page.
+module.exports.activeUsername = activeUsername
 
 
 
