@@ -1,9 +1,22 @@
 const express = require('express')
+const session = require('express-session')
 const routers = require( __dirname + '/routers/datarouter')
 const fs = require('fs')
 const bodyparser = require('body-parser')
 
 const app = express()
+
+//Start session
+app.use(session({
+	secret: 'Hiro-Kala',
+	resave: false,
+	saveUninitialized: false,
+	cookie: {
+		secure: false,
+		//This is one hour in milliseconds.
+		maxAge: 1000 * 60 * 60
+	}
+}))
 
 //Set view engine and pug file.
 app.set('views', __dirname + '/views')
@@ -20,18 +33,26 @@ app.get('/', function (req,res) {
 	res.render('login')
 })
 
-////////////////////////////
-////////login code//////////
-var activeUsername = "Darthporkius"
+//////////////////////////////////////////////////////////
+////////login code////////////////////////////////////////
 
 app.post('/login', function(req,res){
-	// console.log(reg.body.username)
-	// console.log(reg.body.password)
-	res.render('login')
+	//if (req.body.username == users.username && 
+	//	 req.body.password == users.password)
+
+	console.log('Login post body is ', req.body)
+	//Test session.
+	console.log(req.session)
+	req.session.activeUser = req.body.username
+	res.render('home', {
+		username: req.session.activeUser
+	})
+	//else res.render('login')
 })
 
-////////////////////////////
-////////////////////////////
+
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 app.get('/register', function (req,res) {
 	res.render('register')
@@ -40,11 +61,6 @@ app.get('/register', function (req,res) {
 /////////The router/////////
 //Username is the username of the current loggedin user.
 app.use('/username', routers)
-
-//exporting the username so it can be used in the 
-//home page.
-module.exports.activeUsername = activeUsername
-
 
 
 //Server 
