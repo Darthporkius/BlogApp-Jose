@@ -147,28 +147,33 @@ app.post('/login', function(req,res){
 			username: req.body.username
 		}
 	}).then( function(user) {
-		if ( req.body.password == user.password ) { 
 		
-			//Test req.body
-			//console.log('Login post body is ', req.body)
-			//Test session.
-			//console.log(req.session)
+		if ( req.body.password == user.password ) { 
 
 			//Pass form username into req.session.activeUser
 			req.session.activeUser = req.body.username
 
-			//This will then render the home page after the username and
-			//the password are confirmed. 
+			//This will then render the home page after 
+			//the username and the password are confirmed. 
 			res.render('home', {
 				username: req.session.activeUser
 			}) 
 		}
-		//This is what happends if the login fails.
+		//This is what happends if the username is found but
+		//not the password.
 		else { 
 			res.render('login', {
-				loginfail: 'Username or password not found.' 
+				loginfail: 'Password is not correct.' 
 			}) 
 		}
+	})
+	//If no username is found it will return nul and crash the app
+	//this catch will conpensate for that and reload the login page.
+	.catch( function(error) {
+		console.log(error)
+		return res.render('login', {
+				loginfail: 'Username or password not found.' 
+		}) 
 	})
 })
 //////////////////////////////////////////////////////////
