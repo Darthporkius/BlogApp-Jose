@@ -1,8 +1,6 @@
 const express = require('express')
 const bodyparser = require('body-parser')
 
-//const users = require( __dirname + '/../app')
-
 const router = express.Router()
 
 
