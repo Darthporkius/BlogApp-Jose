@@ -103,8 +103,8 @@ db.sync({force: true}).then( done => {
 		})
 	])
 } )
-
-/////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 
 //Initiate the app with express.
@@ -184,6 +184,38 @@ app.post('/login', function(req,res){
 /////////////////register code////////////////////////////
 app.get('/register', function (req,res) {
 	res.render('register')
+})
+
+//The findOrCreate method will find check if certain elements
+//already exist. If they do it will not create a new user. Else
+//it will create the new user.
+app.post('/register', function (req,res) {
+	User.findOrCreate({
+		//It checks if the entered username and password are available. 
+		where: {
+			username: req.body.username,
+			password: req.body.password
+		},
+		defaults: {
+			firstname: req.body.firstname,
+			lastname: req.body.lastname,
+			email: req.body.email
+		}
+	}).spread( function(user, created) {
+		console.log(user.get({
+			plain: true
+		}))
+		console.log(created)
+		if (created == true) {
+			res.render('login', {
+			registersucces: 'Registration Successful'
+			})
+		} else {
+			res.render('login', {
+			registersucces: 'Registration Failed. Username and/or password already in use.'
+			})
+		}
+	})
 })
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
