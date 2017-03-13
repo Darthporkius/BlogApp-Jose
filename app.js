@@ -232,6 +232,7 @@ app.post('/logout', function (req,res) {
 	res.render('login')
 	console.log(req.session)
 })
+//////////
 
 
 //Server 
