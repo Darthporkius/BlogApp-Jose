@@ -225,14 +225,13 @@ app.post('/register', function (req,res) {
 //Username is the username of the current loggedin user.
 app.use('/username', routers)
 
-//The logout
-// //THis does not yet work.///
-// //Destroy the session uppon logout.
-// app.post('/logout', 
-// 	req.session.destroy(function (err){
-// 		res.render('login')
-// 	}))
-// ////
+////The logout
+app.post('/logout', function (req,res) {
+	req.session.destroy()
+	console.log('Session terminated')
+	res.render('login')
+	console.log(req.session)
+})
 
 
 //Server 

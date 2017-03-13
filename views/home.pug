@@ -14,7 +14,8 @@ body
 			a( href="/username/newpost") Make a Post |
 			a( href="/username/mypost") Myposts |
 			a( href="/username/allposts") Allposts |
-			a( href="/") logout
+			form(action="/logout", method="post")
+				button(type="submit" class="btn btn-danger btn-block") logout
 			block content
 			hr
 			img(src="http://24.media.tumblr.com/tumblr_m4qwdb2Rch1r5ur0ho1_500.gif")
