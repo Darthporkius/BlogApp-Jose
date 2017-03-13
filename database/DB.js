@@ -2,14 +2,16 @@
 //I wrote it here aswell so I can run this script independantly from
 //the app.js. To test the database.
 const sequelize = require('sequelize')
+let db = {} 
 
-	const db = new sequelize( 'blogdb', 'postgres', 'password',{
+	db = new sequelize( 'blogdb', 'postgres', 'password',{
 		host: 'localhost',
 		dialect: 'postgres'
 	})
 
+
 	//Create the users table.
-	const User = db.define( 'user', {
+	db.User = db.define( 'user', {
 		firstname: sequelize.STRING,
 		lastname: sequelize.STRING,
 		email: sequelize.STRING,
@@ -18,50 +20,49 @@ const sequelize = require('sequelize')
 	})
 
 	//Create the posts table.
-	const Post = db.define( 'post', {
+	db.Post = db.define( 'post', {
 		title: sequelize.STRING,
 		post: sequelize.STRING,
 	})
 
 	//Create the comments table.
-	const Comment = db.define( 'comment', {
+	db.Comment = db.define( 'comment', {
 		comment: sequelize.STRING
 	}) 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 
 
-
-
 //The relations between the tabels and the injection
 //of demo data are wrapped in a function so they can be exported
 //to the app.js
-function DBstart () {
+
 	//Relation between user and post tables.
-	Post.belongsTo(User)
-	User.hasMany(Post)
+	db.Post.belongsTo(User)
+	db.User.hasMany(Post)
 
 	//Relation between post and comment tables.
-	Post.hasMany(Comment)
-	Comment.belongsTo(Post)
+	db.Post.hasMany(Comment)
+	db.Comment.belongsTo(Post)
 
 	//Relation between user and comment.
-	Comment.belongsTo(User)
-	User.hasMany(Comment)
-
+	db.Comment.belongsTo(User)
+	db.User.hasMany(Comment)
+	
+function DBfunction() {
 	///Demo data
 	///This does work. The first part is mine.
 	db.sync({force: true}).then( done => {
 		return Promise.all([
 			//demo data in user table
-			User.create({
+			db.User.create({
 				firstname: 'Dhova',
 				lastname: 'Kin',
 				email: 'dragon@gmail.com',
 				password: 'werewolf',
 				username: 'DhovaKing'
 			}),
-			User.create({
+			db.User.create({
 				firstname: 'Bruce',
 				lastname: 'Banner',
 				email: 'prof_Banner@hotmail.com',
@@ -100,7 +101,8 @@ function DBstart () {
 }
 
 //This module is executed in the app.js file.
-module.exports.DBstart = DBstart
+module.exports = db
+module.exports.DBfunction = DBfunction
 
 
 
